@@ -10,7 +10,7 @@ using namespace cv;
 int markerId = -1;
 int markerSize = 50;
 int margin = 1;
-Ptr<aruco::Dictionary> DICTIONARY = aruco::getPredefinedDictionary(aruco::DICT_ARUCO_ORIGINAL);
+
 
 static int parseCommandLine(cxxopts::Options options, int argc, char** argv)
 {
@@ -53,7 +53,8 @@ int main(int argc, char** argv) {
     std::string name = std::to_string(markerId)+ ".png";
 
     Mat marker;
-    aruco::drawMarker(DICTIONARY, markerId, markerSize, marker, margin);
+    aruco::Dictionary dictionary = aruco::getPredefinedDictionary(aruco::DICT_ARUCO_ORIGINAL);
+    aruco::generateImageMarker(dictionary, markerId, markerSize, marker, margin);
     imwrite(name, marker);
     std::cerr << "Succesfully generated " << markerId << ".png." << std::endl;
 }
